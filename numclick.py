@@ -92,31 +92,31 @@ def add_items_score():
     
 while True:
     ticks_since_last_cps = ticks_since_last_cps + 1
-    if keydown(KEY_OK) and keylock_click == False:
+    if keydown(KEY_OK) and not keylock_click:
         score = score + 1
         keylock_click = True
         refresh_score = True
         circle(81,130,40,color("white"),5,color("white"))
         circle(81,130,30,color("black"),5,color("black"))
-    if keydown(KEY_OK) != True and keylock_click == True:
+    if not keydown(KEY_OK) and keylock_click:
         keylock_click = False
         circle(81,130,30,color("white"),5,color("white"))
         circle(81,130,40,color("black"),5,color("black"))
-    if keydown(KEY_DOWN) and keylock_down == False and shop_selected < 3:
+    if keydown(KEY_DOWN) and not keylock_down and shop_selected < 3:
        shop_selected = shop_selected + 1
        refresh_shop_element(shop_selected - 1)
        refresh_shop_element(shop_selected)
        keylock_down = True
-    if keydown(KEY_DOWN) != True and keylock_down == True:
+    if not keydown(KEY_DOWN) and keylock_down:
          keylock_down = False
-    if keydown(KEY_UP) and keylock_up == False and shop_selected > 1:
+    if keydown(KEY_UP) and not keylock_up and shop_selected > 1:
        shop_selected = shop_selected - 1
        refresh_shop_element(shop_selected + 1)
        refresh_shop_element(shop_selected)
        keylock_up = True
-    if keydown(KEY_UP) != True and keylock_up == True:
+    if not keydown(KEY_UP) and keylock_up:
          keylock_up = False 
-    if keydown(KEY_EXE) and keylock_buy == False:
+    if keydown(KEY_EXE) and not keylock_buy:
         if shop_selected == 1 and score >= finger.price:
             score = score - finger.price
             finger.count = finger.count + 1
@@ -136,12 +136,12 @@ while True:
             refresh_shop_element(3)
             refresh_score = True
         keylock_buy = True
-    if keydown(KEY_EXE) != True and keylock_buy == True:
+    if not keydown(KEY_EXE) and keylock_buy:
         keylock_buy = False
     if ticks_since_last_cps >= 100:
         # Need to decrease this if running in an emulator
         add_items_score()
         ticks_since_last_cps = 0
-    if refresh_score == True:
+    if refresh_score:
         show_score()
         refresh_score = False
