@@ -17,3 +17,5 @@ Desktop.ini
 
 # Python
 __pycache__/
+
+.*_cache/
