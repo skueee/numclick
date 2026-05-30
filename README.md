@@ -55,3 +55,6 @@ git clone https://github.com/skueee/numclick
 
 ## Support
 Feel free to open an [issue](https://github.com/skueee/numclick/issues) if you encounter any problem, or to open a [pull request](https://github.com/skueee/numclick/pulls) if you know how to fix it (check [the contributing guide](https://github.com/skueee/numclick/blob/main/CONTRIBUTING.md))
+
+## Licence
+This repo is lecensed under a [MIT licence](https://github.com/skueee/numclick/blob/main/LICENSE.md)

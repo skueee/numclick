@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for contributing! Here are some guidelines to help you contribute.
+Thanks for your interest in this project! Here are some guidelines to help you contribute.
 
 ## Creating an issue
 
