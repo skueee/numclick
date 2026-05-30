@@ -13,16 +13,16 @@ def circle(x0,y0,r,c1,e,c2):
       set_pixel(x,y1,c1)
       set_pixel(x,y2,c1)
 
-class shop_item:
+class ShopItem:
     def __init__(self, name, count, price, cps):
         self.name = name
         self.count = count
         self.price = price
         self.cps = cps
         
-finger = shop_item("finger", 0, 5, 1)
-granny = shop_item("granny", 0, 50, 5)
-farm = shop_item("farm", 0, 100, 15)
+finger = ShopItem("finger", 0, 5, 1)
+granny = ShopItem("granny", 0, 50, 5)
+farm = ShopItem("farm", 0, 100, 15)
 
 score = 0
 keylock_click = False
