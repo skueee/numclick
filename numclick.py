@@ -45,15 +45,16 @@ def circle(x0, y0, r, c, t):
                     d += 2 * (x - y) + 1
 
 class ShopItem:
-    def __init__(self, name, count, price, cps):
+    def __init__(self, name, count, price, cps, mult):
         self.name = name
         self.count = count
         self.price = price
         self.cps = cps
-        
-finger = ShopItem("finger", 0, 5, 1)
-granny = ShopItem("granny", 0, 50, 5)
-farm = ShopItem("farm", 0, 100, 15)
+        self.mult = mult
+
+finger = ShopItem("finger", 0, 5, 1, 1.15)
+granny = ShopItem("granny", 0, 50, 5, 1.15)
+farm = ShopItem("farm", 0, 100, 15, 1.15)
 
 score = 0
 keylock_click = False
@@ -151,21 +152,27 @@ while True:
         if shop_selected == 1 and score >= finger.price:
             score = score - finger.price
             finger.count = finger.count + 1
-            finger.price = m.ceil(finger.price * 1.15)
+            finger.price = m.ceil(finger.price * finger.mult)
             refresh_shop_element(1)
             refresh_score = True
+            if finger.mult > 1.2:
+                finger.mult = finger.mult - 0.05
         elif shop_selected == 2 and score >= granny.price:
             score = score - granny.price
             granny.count = granny.count + 1
-            granny.price = m.ceil(granny.price * 1.15)
+            granny.price = m.ceil(granny.price * granny.mult)
             refresh_shop_element(2)
             refresh_score = True
+            if granny.mult > 1.2:
+                granny.mult = granny.mult - 0.05
         elif shop_selected == 3 and score >= farm.price:
             score = score - farm.price
             farm.count = farm.count + 1
-            farm.price = m.ceil(farm.price * 1.15)
+            farm.price = m.ceil(farm.price * farm.mult)
             refresh_shop_element(3)
             refresh_score = True
+            if farm.mult > 1.2:
+                farm.mult = farm.mult - 0.05
         keylock_buy = True
     if not i.keydown(i.KEY_EXE) and keylock_buy:
         keylock_buy = False
