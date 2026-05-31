@@ -3,15 +3,47 @@ from ion import *
 from kandinsky import *
 from math import *
 
-def circle(x0,y0,r,c1,e,c2):
-  for i in range(e):
-    x1=x0-r+i
-    x2=x0+r-i
-    for x in range(x1,x2+1):
-      y1=int(y0+sqrt((r-i)**2-(x-x0)**2))
-      y2=int(y0-sqrt((r-i)**2-(x-x0)**2))
-      set_pixel(x,y1,c1)
-      set_pixel(x,y2,c1)
+def circle(x0, y0, r, c, t):
+    x = 0
+    y = r
+    d = 1 - r
+    while x <= y:
+        set_pixel(x0 + x, y0 + y, c)
+        set_pixel(x0 - x, y0 + y, c)
+        set_pixel(x0 + x, y0 - y, c)
+        set_pixel(x0 - x, y0 - y, c)
+        set_pixel(x0 + y, y0 + x, c)
+        set_pixel(x0 - y, y0 + x, c)
+        set_pixel(x0 + y, y0 - x, c)
+        set_pixel(x0 - y, y0 - x, c)
+
+        x += 1
+        if d < 0:
+            d += 2 * x + 1
+        else:
+            y -= 1
+            d += 2 * (x - y) + 1
+    if t > 1:
+        for i in range(t):
+            x = 0
+            y = r + i
+            d = i
+            while x <= y:
+                set_pixel(x0 + x, y0 + y, c)
+                set_pixel(x0 - x, y0 + y, c)
+                set_pixel(x0 + x, y0 - y, c)
+                set_pixel(x0 - x, y0 - y, c)
+                set_pixel(x0 + y, y0 + x, c)
+                set_pixel(x0 - y, y0 + x, c)
+                set_pixel(x0 + y, y0 - x, c)
+                set_pixel(x0 - y, y0 - x, c)
+
+                x += 1
+                if d < 0:
+                    d += 2 * x + 1
+                else:
+                    y -= 1
+                    d += 2 * (x - y) + 1
 
 class ShopItem:
     def __init__(self, name, count, price, cps):
@@ -35,7 +67,7 @@ ticks_since_last_cps = 0
 
 
 draw_string(str(score),75,55)
-circle(81,130,40,color("black"),5,color("black"))
+circle(80,130,40,color("black"),4)
 
 def show_score():
    score_string_length = len(str(score))
@@ -96,12 +128,12 @@ while True:
         score = score + 1
         keylock_click = True
         refresh_score = True
-        circle(81,130,40,color("white"),5,color("white"))
-        circle(81,130,30,color("black"),5,color("black"))
+        circle(80,130,40,color("white"),4)
+        circle(80,130,30,color("black"),3)
     if not keydown(KEY_OK) and keylock_click:
         keylock_click = False
-        circle(81,130,30,color("white"),5,color("white"))
-        circle(81,130,40,color("black"),5,color("black"))
+        circle(80,130,30,color("white"),3)
+        circle(80,130,40,color("black"),4)
     if keydown(KEY_DOWN) and not keylock_down and shop_selected < 3:
        shop_selected = shop_selected + 1
        refresh_shop_element(shop_selected - 1)
