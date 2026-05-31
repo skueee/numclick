@@ -13,13 +13,14 @@ A fun idle game for NumWorks
 ### Executing
 
 #### From the NumWorks website
-1. Go to https://my.numworks.com/python/skue/numclick
+1. Go to https://my.numworks.com/python/skue/numclick or https://my.numworks.com/python/skue/numclickmini (shorter, but unreadable)
 2. Click on "Send to my calculator"
 > Your calculator must be connected, and you must use a Chromium-based browser
 3. Done !
 
 #### From Github
 1. Download the script from [releases](https://github.com/skueee/numclick/releases/new) (stable) or from the [repo files](https://github.com/skueee/numclick/blob/main/numclick.py) (unstable)
+> In the releases, there's a numclickmini.py file. It's the script, but less big. It's not good for dev because it's unredeable
 2. Go to https://my.numworks.com/python/
 3. Click on My scripts, then New Script
 4. Open the script you just downloaded with a text editor and copy everything
