@@ -63,7 +63,8 @@ keylock_up = False
 keylock_buy = False
 shop_selected = 1
 refresh_score = True
-ticks_since_last_cps = 0
+last_cps_tick = 0
+ticks = 0
 
 
 k.draw_string(str(score),75,55)
@@ -123,7 +124,7 @@ def add_items_score():
     
     
 while True:
-    ticks_since_last_cps = ticks_since_last_cps + 1
+    ticks = ticks+1
     if i.keydown(i.KEY_OK) and not keylock_click:
         score = score + 1
         keylock_click = True
@@ -176,10 +177,10 @@ while True:
         keylock_buy = True
     if not i.keydown(i.KEY_EXE) and keylock_buy:
         keylock_buy = False
-    if ticks_since_last_cps >= 100:
+    if ticks - last_cps_tick >= 100:
         # Need to decrease this if running in an emulator
         add_items_score()
-        ticks_since_last_cps = 0
+        last_cps_tick = ticks
     if refresh_score:
         show_score()
         refresh_score = False
