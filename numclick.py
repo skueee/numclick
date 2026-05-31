@@ -144,7 +144,6 @@ def golden_touch():
     golden_button = r.choice(golden_touch_buttons)
     k.draw_string("Press " + button_names[golden_button] + "!", 50, 200, k.color("red"))
     golden_touch_active = True
-    last_golden_touch = ticks
     
 while True:
     ticks = ticks+1
