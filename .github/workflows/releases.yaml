@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v6
 
       - name: Install Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.14'
         
@@ -21,10 +21,10 @@ jobs:
         run: pip install python-minifier
 
       - name: Run the minifier on numclick.py
-        run: pyminify numclick.py --output numclick-mini.py --rename-globals
+        run: pyminify numclick.py --output numclickmini.py --rename-globals --prefer-single-line --remove-literal-statements
 
       - name: Upload Asset
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: |
             numclick.py
