@@ -10,16 +10,18 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - name: Install Python and Minifier
-        uses: actions/setup-python@v6
+      - name: Install Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.14'
-      - run: pip install python-minifier
+        
+      - name: Install python-minifier  
+        run: pip install python-minifier
 
       - name: Run the minifier on numclick.py
-      - run: pyminify numclick.py --output numclick-mini.py --rename-globals
+        run: pyminify numclick.py --output numclick-mini.py --rename-globals
 
       - name: Upload Asset
         uses: softprops/action-gh-release@v2
