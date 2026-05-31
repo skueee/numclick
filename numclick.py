@@ -1,6 +1,7 @@
 import kandinsky as k
 import ion as i
 import math as m
+import random as r
 
 def circle(x0, y0, r, c, t):
     x = 0
@@ -65,6 +66,10 @@ shop_selected = 1
 refresh_score = True
 last_cps_tick = 0
 ticks = 0
+golden_touch_active = False
+golden_touch_timer = r.randint(500, 1000)
+golden_touch_buttons = [i.KEY_ZERO, i.KEY_ONE, i.KEY_TWO, i.KEY_THREE, i.KEY_FOUR, i.KEY_FIVE, i.KEY_SIX, i.KEY_SEVEN, i.KEY_EIGHT, i.KEY_NINE]
+last_golden_touch = 0
 
 
 k.draw_string(str(score),75,55)
@@ -122,6 +127,24 @@ def add_items_score():
     score += finger.count * finger.cps + granny.count * granny.cps + farm.count * farm.cps
     refresh_score = True
     
+def golden_touch():
+    global golden_button, golden_touch_active
+    button_names = {
+    i.KEY_ZERO: "0",
+    i.KEY_ONE: "1",
+    i.KEY_TWO: "2",
+    i.KEY_THREE: "3",
+    i.KEY_FOUR: "4",
+    i.KEY_FIVE: "5",
+    i.KEY_SIX: "6",
+    i.KEY_SEVEN: "7",
+    i.KEY_EIGHT: "8",
+    i.KEY_NINE: "9"
+    }
+    golden_button = r.choice(golden_touch_buttons)
+    k.draw_string("Press " + button_names[golden_button] + "!", 50, 200, k.color("red"))
+    golden_touch_active = True
+    last_golden_touch = ticks
     
 while True:
     ticks = ticks+1
@@ -181,6 +204,20 @@ while True:
         # Need to decrease this if running in an emulator
         add_items_score()
         last_cps_tick = ticks
+    if ticks - last_golden_touch >= golden_touch_timer and not golden_touch_active:
+        golden_touch()
+    if golden_touch_active and i.keydown(golden_button):
+        score = score * r.randint(2,5)
+        k.fill_rect(0,200,145,15,k.color("white"))
+        refresh_score = True
+        golden_touch_active = False
+        golden_touch_timer = r.randint(500, 1000)
+        last_golden_touch = ticks
+    if golden_touch_active and ticks - last_golden_touch >= 500:
+        golden_touch_active = False
+        k.fill_rect(0,200,145,15,k.color("white"))
+        last_golden_touch = ticks
+        golden_touch_timer = r.randint(500, 1000)
     if refresh_score:
         show_score()
         refresh_score = False
