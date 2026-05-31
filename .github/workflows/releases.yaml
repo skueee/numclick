@@ -28,6 +28,6 @@ jobs:
         with:
           files: |
             numclick.py
-            numclick-mini.py
+            numclickmini.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
