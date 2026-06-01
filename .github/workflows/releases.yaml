@@ -8,7 +8,7 @@ permissions:
   contents: write
 
 jobs:
-  minify_and_release:
+  release_minified_file:
     runs-on: ubuntu-latest
 
     steps:
@@ -20,17 +20,20 @@ jobs:
         with:
           python-version: '3.14'
         
-      - name: Install python-minifier  
+      - name: Install python-minifier
         run: pip install python-minifier
 
-      - name: Run the minifier on numclick.py
+      - name: Run the minifier on numclick.py to create numclickmini.py
         run: pyminify numclick.py --output numclickmini.py --rename-globals --prefer-single-line --remove-literal-statements
 
-      - name: Upload Asset
+      - name: Run comments deleter on numclick.py
+        run: python .github/workflows/delete-comments.py numclick.py
+
+      - name: Upload Assets
         uses: softprops/action-gh-release@v3
         with:
           files: |
-            numclick.py
-            numclickmini.py
+           numclick.py
+           numclickmini.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
