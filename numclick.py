@@ -144,7 +144,7 @@ def add_items_score():
 
 # Used to generate a golden touch event, which gives the player a random multiplier to their score if they press the correct button in time
 def golden_touch():
-    global golden_button, golden_touch_active
+    global golden_button, golden_touch_active, last_golden_touch
     button_names = {
     i.KEY_ZERO: "0",
     i.KEY_ONE: "1",
@@ -160,6 +160,7 @@ def golden_touch():
     golden_button = r.choice(golden_touch_buttons)
     k.draw_string("Press " + button_names[golden_button] + "!", 50, 200, k.color("red"))
     golden_touch_active = True
+    last_golden_touch = ticks
 
 show_score()
 circle(80,130,40,k.color("black"),4)
