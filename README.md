@@ -1,6 +1,6 @@
 # numclick
 
-A fun idle game for NumWorks
+A fun clicker game for NumWorks
 
 ## Features
 
