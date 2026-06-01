@@ -21,7 +21,7 @@ A fun idle game for NumWorks
 
 #### From Github
 1. Download the script from [releases](https://github.com/skueee/numclick/releases/new) (stable) or from the [repo files](https://github.com/skueee/numclick/blob/main/numclick.py) (unstable)
-> In the releases, there's a numclickmini.py file. It's the script, but less big. It's not good for dev because it's unredeable
+> In the releases, there's a numclickmini.py file. It's the script, but less big. It's not good for dev because it's unreadeable
 2. Go to https://my.numworks.com/python/
 3. Click on My scripts, then New Script
 4. Open the script you just downloaded with a text editor and copy everything
@@ -54,6 +54,11 @@ git clone https://github.com/skueee/numclick
 - **Shop items give points too slowly in emulator**
   
   This happens because ticks run slower on emulators than physical calculators. Reduce the tick threshold in the main loop if it feels too slow.
+
+- **Doesn't work in NumWorks online Epsilon emulator**
+
+  The NumWorks simulator act weirdly with Ion, the module used to register keyboard inputs.
+  You can try to change the bindings to keys with equivalents on your keyboard.
 
 ## Support
 Feel free to open an [issue](https://github.com/skueee/numclick/issues) if you encounter any problem, or to open a [pull request](https://github.com/skueee/numclick/pulls) if you know how to fix it (check [the contributing guide](https://github.com/skueee/numclick/blob/main/CONTRIBUTING.md))
