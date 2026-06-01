@@ -5,16 +5,17 @@ import random as r
 
 class ShopItem:
     # Class to represent an item in the shop
-    def __init__(self, name, count, price, cps, mult):
+    def __init__(self, name, count, price, cps, mult, rank):
         self.name = name
         self.count = count
         self.price = price
         self.cps = cps
         self.mult = mult
+        self.rank = rank
 
-finger = ShopItem("finger", 0, 5, 1, 1.15)
-granny = ShopItem("granny", 0, 50, 5, 1.15)
-farm = ShopItem("farm", 0, 100, 15, 1.15)
+finger = ShopItem("finger", 0, 5, 1, 1.15, 1)
+granny = ShopItem("granny", 0, 50, 5, 1.15, 2)
+farm = ShopItem("farm", 0, 100, 15, 1.15, 3)
 
 
 # Variables related to the score
@@ -40,7 +41,6 @@ ticks = 0
 # The golden touch is a random event that gives the player a random multiplier to their score if they press the correct button in time
 golden_touch_active = False
 golden_touch_timer = r.randint(1000, 2000)
-golden_touch_buttons = [i.KEY_ZERO, i.KEY_ONE, i.KEY_TWO, i.KEY_THREE, i.KEY_FOUR, i.KEY_FIVE, i.KEY_SIX, i.KEY_SEVEN, i.KEY_EIGHT, i.KEY_NINE]
 last_golden_touch = 0
 
 # Used to show the score at the correct position and to clear the previous score
@@ -51,7 +51,7 @@ def show_score():
    k.draw_string(str(score),score_positionX,55)
 
 # Midpoint circle algorithm
-def circle(x0, y0, r, c, t):
+def create_circle(x0, y0, r, c, t):
     x = 0
     y = r
     d = 1 - r
@@ -93,48 +93,59 @@ def circle(x0, y0, r, c, t):
                     y -= 1
                     d += 2 * (x - y) + 1
 
+def circle_clicker(clicked):
+    if clicked:
+        create_circle(80,130,40,k.color("white"),4)
+        create_circle(80,130,30,k.color("black"),3)
+    else:
+        create_circle(80,130,30,k.color("white"),3)
+        create_circle(80,130,40,k.color("black"),4)
+
 # Used to show every shop items, calculating the position of everything based on the "rank" (the position of the item in the shop, from top to bottom)
 def show_shop_item(name, count, price, cps, rank):
     cps_string = str(cps) + "c/ps"
     price_string = "$" + str(price)
     if shop_selected == rank:
-        for i in range(150):
-            k.set_pixel(i+150,rank*50-25,k.color("red"))
-            k.set_pixel(i+150,rank*50+25,k.color("red"))
-        for i in range(50):
-            k.set_pixel(150,i+rank*50-25,k.color("red"))
-            k.set_pixel(300,i+rank*50-25,k.color("red"))
-        k.draw_string(name,155,rank*50-20,k.color("red"))
-        k.draw_string(str(count),155,rank*50+1,k.color("red"))
-        k.draw_string(price_string,295-len(price_string)*10,rank*50-20,k.color("red"))
-        k.draw_string(cps_string,295-len(cps_string)*10,rank*50+1,k.color("red"))
+        color = k.color("red")
     else:
-        for i in range(150):
-            k.set_pixel(i+150,rank*50-25,k.color("black"))
-            k.set_pixel(i+150,rank*50+25,k.color("black"))
-        for i in range(50):
-            k.set_pixel(150,i+rank*50-25,k.color("black"))
-            k.set_pixel(300,i+rank*50-25,k.color("black"))
-        k.draw_string(name,155,rank*50-20)
-        k.draw_string(str(count),155,rank*50+1)
-        k.draw_string(price_string,295-len(price_string)*10,rank*50-20)
-        k.draw_string(cps_string,295-len(cps_string)*10,rank*50+1)
+        color = k.color("black")
+    for a in range(150):
+        k.set_pixel(a+150,rank*50-25,k.color(color))
+        k.set_pixel(a+150,rank*50+25,k.color(color))
+    for a in range(50):
+        k.set_pixel(150,a+rank*50-25,k.color(color))
+        k.set_pixel(300,a+rank*50-25,k.color(color))
+    k.draw_string(name,155,rank*50-20,k.color(color))
+    k.draw_string(str(count),155,rank*50+1,k.color(color))
+    k.draw_string(price_string,295-len(price_string)*10,rank*50-20,k.color(color))
+    k.draw_string(cps_string,295-len(cps_string)*10,rank*50+1,k.color(color))
 
 # Used to refresh the whole shop
 # You probably don't want to use that, it's better to use refresh_shop_element because this one can create some bugs
 def refresh_shop():
-    show_shop_item(farm.name, farm.count, farm.price, farm.cps, 3)
-    show_shop_item(granny.name, granny.count, granny.price, granny.cps, 2)
-    show_shop_item(finger.name, finger.count, finger.price, finger.cps, 1)
+    show_shop_item(farm.name, farm.count, farm.price, farm.cps, farm.rank)
+    show_shop_item(granny.name, granny.count, granny.price, granny.cps, granny.rank)
+    show_shop_item(finger.name, finger.count, finger.price, finger.cps, finger.rank)
 
 # Used to refresh only one element of the shop, based on the "rank"
 def refresh_shop_element(item_rank):
     if item_rank == 1:
-        show_shop_item(finger.name, finger.count, finger.price, finger.cps, 1)
+        show_shop_item(finger.name, finger.count, finger.price, finger.cps, finger.rank)
     elif item_rank == 2:
-        show_shop_item(granny.name, granny.count, granny.price, granny.cps, 2)
+        show_shop_item(granny.name, granny.count, granny.price, granny.cps, granny.rank)
     elif item_rank == 3:
-        show_shop_item(farm.name, farm.count, farm.price, farm.cps, 3)
+        show_shop_item(farm.name, farm.count, farm.price, farm.cps, farm.rank)
+
+def buy_item(item):
+    global score, refresh_score
+    if score >= item.price:
+        score = score - item.price
+        item.count = item.count + 1
+        item.price = m.ceil(item.price * item.mult)
+        refresh_shop_element(item.rank)
+        refresh_score = True
+        if item.mult > 1.2:
+            item.mult = item.mult - 0.05
 
 # Used to add the score generated by the items
 def add_items_score():
@@ -145,7 +156,8 @@ def add_items_score():
 # Used to generate a golden touch event, which gives the player a random multiplier to their score if they press the correct button in time
 def golden_touch():
     global golden_button, golden_touch_active, last_golden_touch
-    button_names = {
+    buttons = [i.KEY_ZERO, i.KEY_ONE, i.KEY_TWO, i.KEY_THREE, i.KEY_FOUR, i.KEY_FIVE, i.KEY_SIX, i.KEY_SEVEN, i.KEY_EIGHT, i.KEY_NINE]
+    buttons_names = {
     i.KEY_ZERO: "0",
     i.KEY_ONE: "1",
     i.KEY_TWO: "2",
@@ -157,13 +169,13 @@ def golden_touch():
     i.KEY_EIGHT: "8",
     i.KEY_NINE: "9"
     }
-    golden_button = r.choice(golden_touch_buttons)
-    k.draw_string("Press " + button_names[golden_button] + "!", 50, 200, k.color("red"))
+    golden_button = r.choice(buttons)
+    k.draw_string("Press " + buttons_names[golden_button] + "!", 50, 200, k.color("red"))
     golden_touch_active = True
     last_golden_touch = ticks
 
 show_score()
-circle(80,130,40,k.color("black"),4)
+circle_clicker(False)
 refresh_shop()
 
 # Main loop
@@ -173,12 +185,10 @@ while True:
         score = score + 1
         keylock_click = True
         refresh_score = True
-        circle(80,130,40,k.color("white"),4)
-        circle(80,130,30,k.color("black"),3)
+        circle_clicker(True)
     if not i.keydown(i.KEY_OK) and keylock_click:
         keylock_click = False
-        circle(80,130,30,k.color("white"),3)
-        circle(80,130,40,k.color("black"),4)
+        circle_clicker(False)
     if i.keydown(i.KEY_DOWN) and not keylock_down and shop_selected < 3:
        shop_selected = shop_selected + 1
        refresh_shop_element(shop_selected - 1)
@@ -195,29 +205,11 @@ while True:
          keylock_up = False 
     if i.keydown(i.KEY_EXE) and not keylock_buy:
         if shop_selected == 1 and score >= finger.price:
-            score = score - finger.price
-            finger.count = finger.count + 1
-            finger.price = m.ceil(finger.price * finger.mult)
-            refresh_shop_element(1)
-            refresh_score = True
-            if finger.mult > 1.2:
-                finger.mult = finger.mult - 0.05
+            buy_item(finger)
         elif shop_selected == 2 and score >= granny.price:
-            score = score - granny.price
-            granny.count = granny.count + 1
-            granny.price = m.ceil(granny.price * granny.mult)
-            refresh_shop_element(2)
-            refresh_score = True
-            if granny.mult > 1.2:
-                granny.mult = granny.mult - 0.05
+            buy_item(granny)
         elif shop_selected == 3 and score >= farm.price:
-            score = score - farm.price
-            farm.count = farm.count + 1
-            farm.price = m.ceil(farm.price * farm.mult)
-            refresh_shop_element(3)
-            refresh_score = True
-            if farm.mult > 1.2:
-                farm.mult = farm.mult - 0.05
+            buy_item(farm)
         keylock_buy = True
     if not i.keydown(i.KEY_EXE) and keylock_buy:
         keylock_buy = False
