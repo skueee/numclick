@@ -39,7 +39,7 @@ ticks = 0
 # Variables related to the golden touch
 # The golden touch is a random event that gives the player a random multiplier to their score if they press the correct button in time
 golden_touch_active = False
-golden_touch_timer = r.randint(500, 1000)
+golden_touch_timer = r.randint(1000, 2000)
 golden_touch_buttons = [i.KEY_ZERO, i.KEY_ONE, i.KEY_TWO, i.KEY_THREE, i.KEY_FOUR, i.KEY_FIVE, i.KEY_SIX, i.KEY_SEVEN, i.KEY_EIGHT, i.KEY_NINE]
 last_golden_touch = 0
 
@@ -221,7 +221,7 @@ while True:
         keylock_buy = True
     if not i.keydown(i.KEY_EXE) and keylock_buy:
         keylock_buy = False
-    if ticks - last_cps_tick >= 100:
+    if ticks - last_cps_tick >= 140:
         # Need to decrease this if running in an emulator
         add_items_score()
         last_cps_tick = ticks
@@ -232,13 +232,13 @@ while True:
         k.fill_rect(0,200,145,15,k.color("white"))
         refresh_score = True
         golden_touch_active = False
-        golden_touch_timer = r.randint(500, 1000)
+        golden_touch_timer = r.randint(2000, 5000)
         last_golden_touch = ticks
     if golden_touch_active and ticks - last_golden_touch >= 500:
         golden_touch_active = False
         k.fill_rect(0,200,145,15,k.color("white"))
         last_golden_touch = ticks
-        golden_touch_timer = r.randint(500, 1000)
+        golden_touch_timer = r.randint(2000, 5000)
     if refresh_score:
         show_score()
         refresh_score = False
