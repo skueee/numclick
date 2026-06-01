@@ -228,7 +228,7 @@ while True:
     if ticks - last_golden_touch >= golden_touch_timer and not golden_touch_active:
         golden_touch()
     if golden_touch_active and i.keydown(golden_button):
-        score = score * r.randint(2,5)
+        score = int(score * r.uniform(2,4))
         k.fill_rect(0,200,145,15,k.color("white"))
         refresh_score = True
         golden_touch_active = False
