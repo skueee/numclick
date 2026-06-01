@@ -7,6 +7,7 @@ A fun idle game for NumWorks
 - Basic clicker mechanic
 - Cool circle that shrinks when you click
 - Shop items that help you earn more points
+- Golden touch - random thing that asks you to press on a random button to have a random amount of points :)
 
 ## Getting Started
 
